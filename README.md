@@ -49,11 +49,11 @@ Using Node JS (Express) and MVC Architecture
 **POST** `/api/v1/progress` - Create a progress entry  
 
 ### Attempt Routes  
-**GET** `/api/v1/attempts?progressId=:id` - Get attempts for progress  
-
 **GET** `/api/v1/attempts/:id` - Get attempt details  
 
-**POST** `/api/v1/attempts?progressId=:id` - Record a new attempt  
+**GET** `/api/v1/attempts/by-progress?progressId=:id` - Get attempts for progress  
+
+**POST** `/api/v1/attempts/by-progress?progressId=:id` - Record a new attempt  
 
 ### Admin Routes  
 **GET** `/api/v1/admin/users` - Get all users  
