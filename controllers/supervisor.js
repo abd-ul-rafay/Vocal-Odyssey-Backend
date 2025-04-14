@@ -1,5 +1,37 @@
-const getSupervisor = (req, res) => res.json({ message: 'Supervisor data retrieved' });
-const updateSupervisor = (req, res) => res.json({ message: 'Supervisor updated' });
-const deleteSupervisor = (req, res) => res.json({ message: 'Supervisor deleted' });
+const User = require('../models/user');
+
+const getSupervisor = async (req, res) => {
+  try {
+    const supervisor = await User.findOne({ _id: req.params.id, role: 'supervisor' });
+    if (!supervisor) return res.status(404).json({ error: 'Supervisor not found' });
+    res.status(200).json(supervisor);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+const updateSupervisor = async (req, res) => {
+  try {
+    const updatedSupervisor = await User.findOneAndUpdate(
+      { _id: req.params.id, role: 'supervisor' },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedSupervisor) return res.status(404).json({ error: 'Supervisor not found' });
+    res.status(200).json(updatedSupervisor);
+  } catch (err) {
+    res.status(400).json({ error: 'Failed to update supervisor', details: err.message });
+  }
+};
+
+const deleteSupervisor = async (req, res) => {
+  try {
+    const deleted = await User.findOneAndDelete({ _id: req.params.id, role: 'supervisor' });
+    if (!deleted) return res.status(404).json({ error: 'Supervisor not found' });
+    res.status(200).json({ message: 'Supervisor deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
 
 module.exports = { getSupervisor, updateSupervisor, deleteSupervisor };

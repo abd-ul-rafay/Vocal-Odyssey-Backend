@@ -3,7 +3,7 @@ const { getAttemptsByProgress, getAttempt, createAttempt } = require('../control
 
 const router = express.Router();
 
-router.route('/:progressId')
+router.route('/by-progress/:progressId')
     .get(getAttemptsByProgress)
     .post(createAttempt);
 

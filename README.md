@@ -13,11 +13,11 @@ Using Node JS (Express) and MVC Architecture
 **POST** `/api/v1/auth/recover-password` - Password recovery  
 
 ### Supervisor Routes  
-**GET** `/api/v1/supervisors/:id` - Get supervisor details  
+**GET** `/api/v1/supervisor/:id` - Get supervisor details  
 
-**PUT** `/api/v1/supervisors/:id` - Update supervisor  
+**PUT** `/api/v1/supervisor/:id` - Update supervisor  
 
-**DELETE** `/api/v1/supervisors/:id` - Delete supervisor  
+**DELETE** `/api/v1/supervisor/:id` - Delete supervisor  
 
 ### Children Routes  
 **GET** `/api/v1/children?supervisorId=:id` - Get all children   
@@ -47,8 +47,6 @@ Using Node JS (Express) and MVC Architecture
 **GET** `/api/v1/progress/:id` - Get specific progress  
 
 **POST** `/api/v1/progress` - Create a progress entry  
-
-**PUT** `/api/v1/progress/:id` - Update progress  
 
 ### Attempt Routes  
 **GET** `/api/v1/attempts?progressId=:id` - Get attempts for progress  

@@ -1,7 +1,64 @@
-const getChildren = (req, res) => res.json({ message: 'Children list retrieved' });
-const getChild = (req, res) => res.json({ message: 'Child data retrieved' });
-const createChild = (req, res) => res.json({ message: 'Child created' });
-const updateChild = (req, res) => res.json({ message: 'Child updated' });
-const deleteChild = (req, res) => res.json({ message: 'Child deleted' });
+const Child = require('../models/child');
 
-module.exports = { getChildren, getChild, createChild, updateChild, deleteChild };
+const getChildren = async (req, res) => {
+  try {
+    const { supervisorId } = req.query;
+    const query = supervisorId ? { supervisor_id: supervisorId } : {};
+    const children = await Child.find(query);
+    res.status(200).json(children);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+const getChild = async (req, res) => {
+  try {
+    const child = await Child.findById(req.params.id);
+    if (!child) return res.status(404).json({ error: 'Child not found' });
+    res.status(200).json(child);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+const createChild = async (req, res) => {
+  try {
+    const { name, gender, dob, image_path, supervisor_id } = req.body;
+    const newChild = await Child.create({ name, gender, dob, image_path, supervisor_id });
+    res.status(201).json(newChild);
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid child data', details: err.message });
+  }
+};
+
+const updateChild = async (req, res) => {
+  try {
+    const updatedChild = await Child.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedChild) return res.status(404).json({ error: 'Child not found' });
+    res.status(200).json(updatedChild);
+  } catch (err) {
+    res.status(400).json({ error: 'Failed to update child', details: err.message });
+  }
+};
+
+const deleteChild = async (req, res) => {
+  try {
+    const deletedChild = await Child.findByIdAndDelete(req.params.id);
+    if (!deletedChild) return res.status(404).json({ error: 'Child not found' });
+    res.status(200).json({ message: 'Child deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+module.exports = {
+  getChildren,
+  getChild,
+  createChild,
+  updateChild,
+  deleteChild
+};
