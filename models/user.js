@@ -14,12 +14,18 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false // don't return password by default
+    select: false
   },
   role: {
     type: String,
     enum: ['admin', 'supervisor'],
     default: 'supervisor'
+  },
+  otp: {
+    type: String
+  },
+  otpExpires: {
+    type: Date
   },
   createdAt: {
     type: Date,
@@ -29,5 +35,4 @@ const UserSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('User', UserSchema);
- 
+module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
