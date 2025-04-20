@@ -12,6 +12,8 @@ Using Node JS (Express) and MVC Architecture
 
 **POST** `/api/v1/auth/recover-password` - Password recovery  
 
+**POST** `/api/v1/auth/reset-password` - Password reset
+
 ### Supervisor Routes  
 **GET** `/api/v1/supervisor/:id` - Get supervisor details  
 

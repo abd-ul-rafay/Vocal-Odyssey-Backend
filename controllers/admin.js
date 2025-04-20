@@ -1,12 +1,16 @@
-const User = require('../models/user');
+const User = require("../models/user");
 
 // GET all supervisors
 const getUsers = async (req, res) => {
   try {
-    const supervisors = await User.find({ role: 'supervisor' }).select('-password');
+    const supervisors = await User.find({ role: "supervisor" }).select(
+      "-password"
+    );
     res.json(supervisors);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to retrieve users', details: err.message });
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve users", details: err.message });
   }
 };
 
@@ -15,13 +19,17 @@ const updateUser = async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
   try {
-    const user = await User.findByIdAndUpdate(id, updates, { new: true }).select('-password');
-    if (!user || user.role !== 'supervisor') {
-      return res.status(404).json({ error: 'Supervisor not found' });
+    const user = await User.findByIdAndUpdate(id, updates, {
+      new: true,
+    }).select("-password");
+    if (!user || user.role !== "supervisor") {
+      return res.status(404).json({ error: "Supervisor not found" });
     }
-    res.json({ message: 'User updated', user });
+    res.json({ message: "User updated", user });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update user', details: err.message });
+    res
+      .status(500)
+      .json({ error: "Failed to update user", details: err.message });
   }
 };
 
@@ -29,13 +37,15 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await User.findOneAndDelete({ _id: id, role: 'supervisor' });
+    const user = await User.findOneAndDelete({ _id: id, role: "supervisor" });
     if (!user) {
-      return res.status(404).json({ error: 'Supervisor not found' });
+      return res.status(404).json({ error: "Supervisor not found" });
     }
-    res.json({ message: 'User deleted successfully' });
+    res.json({ message: "User deleted successfully" });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to delete user', details: err.message });
+    res
+      .status(500)
+      .json({ error: "Failed to delete user", details: err.message });
   }
 };
 
