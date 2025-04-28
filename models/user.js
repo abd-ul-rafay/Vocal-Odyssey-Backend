@@ -21,17 +21,6 @@ const UserSchema = new mongoose.Schema({
     enum: ['admin', 'supervisor'],
     default: 'supervisor'
   },
-  
-  // otp: {
-  //   type: String
-  // },
-  // otpExpires: {
-  //   type: Date
-  // },
-  // createdAt: {
-  //   type: Date,
-  //   default: Date.now
-  // }
 }, {
   timestamps: true
 });

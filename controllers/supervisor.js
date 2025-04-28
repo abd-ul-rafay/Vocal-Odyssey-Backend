@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 
 const getSupervisor = async (req, res) => {
   try {
@@ -8,7 +8,7 @@ const getSupervisor = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
-};
+}; 
 
 const updateSupervisor = async (req, res) => {
   try {

@@ -1,8 +1,9 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID); 
 
-// POST /api/v1/auth/signup
 const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -20,19 +21,17 @@ const signup = async (req, res) => {
       role: "supervisor",
     });
 
-    res.status(201).json({
-      message: "Signup successful",
-      user: {
-        id: user._id,
-        email: user.email,
-      },
-    });
+    const token = jwt.sign(
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET
+    );
+
+    res.status(201).json({user, token});
   } catch (err) {
     res.status(400).json({ error: "Signup failed", details: err.message });
   }
 };
 
-// POST /api/v1/auth/login
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -44,23 +43,53 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
 
     const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET || "secretKey",
-      { expiresIn: "1d" }
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET
     );
 
-    res.json({ message: "Login successful", token });
+    user.password = undefined; 
+    res.json({ user, token });
   } catch (err) {
     res.status(500).json({ error: "Login failed", details: err.message });
   }
 };
 
-// POST /api/v1/auth/google-signin
 const googleSignin = async (req, res) => {
-  res.json({ message: "Google sign-in successful" });
+  const { idToken } = req.body;
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const { name, email, picture } = ticket.getPayload();
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      const dummyPassword = await bcrypt.hash(name+email, 10);
+
+      user = await User.create({
+        name,
+        email,
+        password: dummyPassword,
+        role: "supervisor",
+      });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET
+    );
+
+    res.json({ user, token });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: "Google sign-in failed", details: err.message });
+  }
 };
 
-// POST /api/v1/auth/recover-password
 const recoverPassword = async (req, res) => {
   const { email } = req.body;
   try {
@@ -75,7 +104,6 @@ const recoverPassword = async (req, res) => {
   }
 };
 
-// POST /api/v1/auth/reset-password
 const resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;
 
