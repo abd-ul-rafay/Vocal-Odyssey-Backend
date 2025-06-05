@@ -13,13 +13,17 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
     select: false
   },
   role: {
     type: String,
     enum: ['admin', 'supervisor'],
     default: 'supervisor'
+  },
+  authProvider: { 
+    type: String, 
+    enum: ['local', 'google'], 
+    default: 'local' 
   },
 }, {
   timestamps: true

@@ -13,8 +13,10 @@ const authentication = require('./middlewares/authentication');
 const connect = require('./db/connect');
 
 const app = express();
-app.use(express.json());
 
+require('./middlewares/security')(app);
+
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/auth', authRoutes);

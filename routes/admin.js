@@ -7,7 +7,6 @@ router.route('/users')
   .get(getUsers);
 
 router.route('/users/:id')
-  .put(updateUser)
   .delete(deleteUser);
 
 module.exports = router;

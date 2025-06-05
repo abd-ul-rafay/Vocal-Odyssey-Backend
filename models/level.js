@@ -14,7 +14,7 @@ const levelSchema = new mongoose.Schema({
   },
   level_type: {
     type: String,
-    enum: ['phonics', 'word', 'sentence'],
+    enum: ['phonics', 'words', 'sentences'],
     required: true,
   },
   ideal_time: {
