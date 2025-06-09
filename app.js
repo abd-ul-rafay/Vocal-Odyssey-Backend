@@ -9,6 +9,7 @@ const levelRoutes = require('./routes/level');
 const progressRoutes = require('./routes/progress');
 const attemptRoutes = require('./routes/attempt');
 const adminRoutes = require('./routes/admin');
+const evaluationRoutes = require('./routes/evaluate');
 const authentication = require('./middlewares/authentication');
 const connect = require('./db/connect');
 
@@ -26,6 +27,7 @@ app.use('/api/v1/levels', authentication, levelRoutes);
 app.use('/api/v1/progress', authentication, progressRoutes);
 app.use('/api/v1/attempts', authentication, attemptRoutes);
 app.use('/api/v1/admin', authentication, adminRoutes);
+app.use('/api/v1/evaluation', authentication, evaluationRoutes);
 
 const PORT = process.env.PORT || 5000;
 
