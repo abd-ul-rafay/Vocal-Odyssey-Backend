@@ -4,6 +4,9 @@ const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 
 module.exports = (app) => {
+  // Trust reverse proxy (Render, etc.)
+  app.set('trust proxy', 1); 
+
   // Set security HTTP headers
   app.use(helmet());
 
@@ -14,7 +17,7 @@ module.exports = (app) => {
   // Rate limiting
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100,
+    max: 1000,
     message: 'Too many requests from this IP, please try again later.'
   });
   app.use(limiter);
