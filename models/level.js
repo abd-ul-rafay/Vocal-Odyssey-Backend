@@ -17,7 +17,7 @@ const levelSchema = new mongoose.Schema({
     enum: ['phonics', 'words', 'sentences'],
     required: true,
   },
-  ideal_time: {
+  ideal_score: {
     type: Number,
     required: true,
   }

@@ -21,9 +21,9 @@ const getAttempt = async (req, res) => {
 
 const createAttempt = async (req, res) => {
   try {
-    const { time_taken, mistakes_counts, stars } = req.body;
+    const { score, mistakes_counts, stars } = req.body;
     const attempt = new Attempt({
-      time_taken,
+      score,
       mistakes_counts,
       stars,
       progress_id: req.params.progressId,

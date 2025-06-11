@@ -56,8 +56,8 @@ const getLevel = async (req, res) => {
 
 const createLevel = async (req, res) => {
   try {
-    const { name, description, content, level_type, ideal_time } = req.body;
-    const newLevel = new Level({ name, description, content, level_type, ideal_time });
+    const { name, description, content, level_type, ideal_score } = req.body;
+    const newLevel = new Level({ name, description, content, level_type, ideal_score });
     const savedLevel = await newLevel.save();
     res.status(201).json(savedLevel);
   } catch (error) {

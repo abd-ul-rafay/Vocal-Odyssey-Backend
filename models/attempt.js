@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const AttemptSchema = new mongoose.Schema({
-  time_taken: {
+  score: {
     type: Number,
     required: true,
   },
