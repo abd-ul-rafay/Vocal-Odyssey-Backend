@@ -32,7 +32,6 @@ const createAttempt = async (req, res) => {
     const saved = await attempt.save();
     res.status(201).json(saved);
   } catch (error) {
-    console.error('Error creating attempt:', error);
     res.status(400).json({ error: 'Invalid attempt data.' });
   }
 };
