@@ -1,9 +1,9 @@
 # Vocal Odyssey Backend  
-Using Node JS (Express) and MVC Architecture
+Node.js Project with Express.js and Mongoose
 
-## API Endpoints  
+## API Endpoints 
 
-### Auth Routes  
+### Authentication Routes  
 **POST** `/api/v1/auth/login` - User login  
 **POST** `/api/v1/auth/signup` - User registration  
 **POST** `/api/v1/auth/google-signin` - Google authentication  
@@ -38,6 +38,10 @@ Using Node JS (Express) and MVC Architecture
 **GET** `/api/v1/attempts/:id` - Get attempt details  
 **GET** `/api/v1/attempts/by-progress?progressId=:id` - Get attempts for progress  
 **POST** `/api/v1/attempts/by-progress?progressId=:id` - Record a new attempt  
+
+### Speech Routes  
+**POST** `/api/v1/speech/create` - Create speech from text 
+**POST** `/api/v1/speech/evaluate` - Evaluate speech with reference text 
 
 ### Admin Routes  
 **GET** `/api/v1/admin/users` - Get all users  
