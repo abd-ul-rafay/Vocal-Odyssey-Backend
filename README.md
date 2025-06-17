@@ -40,8 +40,8 @@ Node.js Project with Express.js and Mongoose
 **POST** `/api/v1/attempts/by-progress?progressId=:id` - Record a new attempt  
 
 ### Speech Routes  
-**POST** `/api/v1/speech/create` - Create speech from text 
-**POST** `/api/v1/speech/evaluate` - Evaluate speech with reference text 
+**POST** `/api/v1/speech/create` - Create speech from text  
+**POST** `/api/v1/speech/evaluate` - Evaluate speech with reference text  
 
 ### Admin Routes  
 **GET** `/api/v1/admin/users` - Get all users  
